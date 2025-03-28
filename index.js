@@ -11,14 +11,21 @@ const patientRoutes = require('./routes/patientRoutes.js');
 const doctorRoutes = require('./routes/docterRoutes.js');
 const chatModel = require('./models/chatModel.js');
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
 const http = require("http");
 const socketIo = require('socket.io');
 const server = http.createServer(app);
 const io = socketIo(server);
 
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+
+
 const PORT = process.env.PORT || 5000;
 
 connectDB();
